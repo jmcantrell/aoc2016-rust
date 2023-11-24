@@ -46,11 +46,12 @@ pub fn solve2(instructions: &Parsed2) -> anyhow::Result<Solution2> {
         direction += turn;
         for _ in 0..steps {
             location = walk(location, direction, 1);
+
             if visits.contains(&location) {
                 return Ok(manhattan_distance_from_origin(location));
-            } else {
-                visits.insert(location);
             }
+
+            visits.insert(location);
         }
     }
 
@@ -64,14 +65,14 @@ mod tests {
     #[test]
     fn solve1() -> anyhow::Result<()> {
         macro_rules! test {
-            ($input:expr, $expected:expr) => {
+            ($input:expr => $expected:expr) => {
                 assert_eq!(super::solve1(&parse1($input)?)?, $expected);
             };
         }
 
-        test!("R2, L3", 5);
-        test!("R2, R2, R2", 2);
-        test!("R5, L5, R5, R3", 12);
+        test!("R2, L3" => 5);
+        test!("R2, R2, R2" => 2);
+        test!("R5, L5, R5, R3" => 12);
 
         Ok(())
     }
@@ -79,12 +80,12 @@ mod tests {
     #[test]
     fn solve2() -> anyhow::Result<()> {
         macro_rules! test {
-            ($input:expr, $expected:expr) => {
+            ($input:expr => $expected:expr) => {
                 assert_eq!(super::solve2(&parse2($input)?)?, $expected);
             };
         }
 
-        test!("R8, R4, R4, R8", 4);
+        test!("R8, R4, R4, R8" => 4);
 
         Ok(())
     }

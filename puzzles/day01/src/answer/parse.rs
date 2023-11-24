@@ -15,9 +15,10 @@ fn parse(input: Input) -> anyhow::Result<Parsed> {
             .position(|c: char| c.is_ascii_digit())
             .context("expected string to end with one or more digits")?;
 
-        let (turn, steps) = s.split_at(i);
-        let turn = turn.try_into()?;
-        let steps = steps.parse()?;
+        let (left, right) = s.split_at(i);
+
+        let turn = left.try_into()?;
+        let steps = right.parse()?;
 
         Ok((turn, steps))
     }

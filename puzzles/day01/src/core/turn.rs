@@ -1,4 +1,4 @@
-use anyhow::{anyhow, ensure, Context};
+use anyhow::{anyhow, ensure};
 
 use std::convert::TryFrom;
 
@@ -24,18 +24,12 @@ impl TryFrom<&str> for Turn {
     type Error = anyhow::Error;
 
     fn try_from(s: &str) -> anyhow::Result<Self> {
-        let mut chars = s.chars();
-
-        let turn = chars.next().context("string is empty")?.try_into()?;
-
-        let rest_count = chars.count();
-
         ensure!(
-            rest_count == 0,
+            s.len() == 1,
             "expected a single character, but there were {}",
-            rest_count
+            s.len()
         );
 
-        Ok(turn)
+        s.chars().next().unwrap().try_into()
     }
 }

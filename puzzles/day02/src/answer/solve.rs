@@ -1,4 +1,6 @@
-use crate::core::{Direction, Instructions, Location, KEYPAD9, KEYPAD_WTF};
+use anyhow::Context;
+
+use crate::core::{Direction, Instructions, Keypad, Location, KEYPAD9, KEYPAD_WTF};
 
 use super::{Parsed1, Parsed2};
 
@@ -6,7 +8,7 @@ type Solution = String;
 pub type Solution1 = Solution;
 pub type Solution2 = Solution;
 
-fn step(&(row, column): &Location, direction: &Direction) -> Location {
+fn step((row, column): Location, direction: Direction) -> Location {
     match direction {
         Direction::Up => (row.saturating_sub(1), column),
         Direction::Down => (row.saturating_add(1), column),
@@ -15,40 +17,36 @@ fn step(&(row, column): &Location, direction: &Direction) -> Location {
     }
 }
 
-fn solve(
+fn solve<const S: usize>(
+    keypad: &Keypad<S>,
     instructions: &Instructions,
-    start: Location,
-    get: fn(Location) -> Option<char>,
-) -> String {
-    let mut location = start;
+) -> anyhow::Result<Solution> {
+    let start_button = '5';
+    let mut location = keypad
+        .find_button(start_button)
+        .with_context(|| format!("no {:?} button", start_button))?;
+
     let mut buttons: Vec<char> = Vec::new();
 
     for instruction in instructions {
-        for direction in instruction {
-            let next_location = step(&location, direction);
-            if get(next_location).is_some() {
+        for &direction in instruction {
+            let next_location = step(location, direction);
+            if keypad.get(next_location).is_some() {
                 location = next_location;
             }
         }
-        buttons.push(get(location).unwrap())
+        buttons.push(*keypad.get(location).unwrap());
     }
 
-    buttons.into_iter().collect()
+    Ok(buttons.into_iter().collect())
 }
 
 pub fn solve1(instructions: &Parsed1) -> anyhow::Result<Solution1> {
-    Ok(solve(instructions, (1, 1), |location| {
-        KEYPAD9.get(location).copied()
-    }))
+    solve(&KEYPAD9, instructions)
 }
 
 pub fn solve2(instructions: &Parsed2) -> anyhow::Result<Solution2> {
-    Ok(solve(instructions, (2, 0), |location| {
-        KEYPAD_WTF
-            .get(location)
-            .and_then(|maybe_value| maybe_value.as_ref())
-            .copied()
-    }))
+    solve(&KEYPAD_WTF, instructions)
 }
 
 #[cfg(test)]

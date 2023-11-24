@@ -20,25 +20,22 @@ impl Add<Turn> for Direction {
     type Output = Self;
 
     fn add(self, turn: Turn) -> Self {
-        use Direction::*;
-        use Turn::*;
-
         match self {
-            North => match turn {
-                Left => West,
-                Right => East,
+            Self::North => match turn {
+                Turn::Left => Self::West,
+                Turn::Right => Self::East,
             },
-            South => match turn {
-                Left => East,
-                Right => West,
+            Self::South => match turn {
+                Turn::Left => Self::East,
+                Turn::Right => Self::West,
             },
-            West => match turn {
-                Left => South,
-                Right => North,
+            Self::West => match turn {
+                Turn::Left => Self::South,
+                Turn::Right => Self::North,
             },
-            East => match turn {
-                Left => North,
-                Right => South,
+            Self::East => match turn {
+                Turn::Left => Self::North,
+                Turn::Right => Self::South,
             },
         }
     }
