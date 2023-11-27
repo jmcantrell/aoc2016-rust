@@ -3,16 +3,6 @@
 version = 3
 
 [[package]]
-name = "__NAME__"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "aoc",
- "criterion",
- "md5",
-]
-
-[[package]]
 name = "aho-corasick"
 version = "1.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -249,6 +239,25 @@ dependencies = [
  "aoc",
  "criterion",
  "lazy-regex",
+]
+
+[[package]]
+name = "day05"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "aoc",
+ "criterion",
+ "md5",
+]
+
+[[package]]
+name = "day06"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "aoc",
+ "criterion",
 ]
 
 [[package]]
