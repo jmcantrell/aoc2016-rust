@@ -9,7 +9,7 @@ pub struct Transfer {
 #[derive(Debug, Clone)]
 pub struct Factory {
     pub bots: Vec<Bot>,
-    pub outputs: Vec<Vec<Value>>,
+    pub outputs: Vec<Value>,
 }
 
 impl Factory {
@@ -67,7 +67,7 @@ impl Factory {
                 for (recipient, value) in self.bots[origin].recipients.into_iter().zip(values) {
                     match recipient {
                         Recipient::Bot(i) => self.bots[i].values.push(value),
-                        Recipient::Output(i) => self.outputs[i].push(value),
+                        Recipient::Output(i) => self.outputs[i] = value,
                     }
                 }
 

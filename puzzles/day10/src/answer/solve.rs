@@ -35,7 +35,7 @@ pub fn solve2(instructions: &Parsed2) -> anyhow::Result<Solution2> {
         .outputs
         .into_iter()
         .take(3)
-        .map(|mut output| output.pop().unwrap() as usize)
+        .map(|value| value as usize)
         .product())
 }
 
