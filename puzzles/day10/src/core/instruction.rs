@@ -5,12 +5,6 @@ use std::convert::TryFrom;
 
 use super::{Index, Recipient, Value};
 
-static RE_INPUT: Lazy<Regex> = lazy_regex!(r"^value (?<value>\d+) goes to bot (?<bot>\d+)$");
-
-static RE_OUTPUT: Lazy<Regex> = lazy_regex!(
-    r"^bot (?<bot>\d+) gives low to (?<recipient_low>\w+ \d+) and high to (?<recipient_high>\w+ \d+)$"
-);
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Instruction {
     Input {
@@ -28,6 +22,13 @@ impl TryFrom<&str> for Instruction {
     type Error = anyhow::Error;
 
     fn try_from(s: &str) -> anyhow::Result<Self> {
+        static RE_INPUT: Lazy<Regex> =
+            lazy_regex!(r"^value (?<value>\d+) goes to bot (?<bot>\d+)$");
+
+        static RE_OUTPUT: Lazy<Regex> = lazy_regex!(
+            r"^bot (?<bot>\d+) gives low to (?<recipient_low>\w+ \d+) and high to (?<recipient_high>\w+ \d+)$"
+        );
+
         if let Some(captures) = RE_INPUT.captures(s) {
             Ok(Self::Input {
                 value: captures["value"].parse()?,

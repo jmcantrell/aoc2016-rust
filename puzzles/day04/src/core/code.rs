@@ -5,9 +5,6 @@ use std::cmp::Reverse;
 use std::collections::{BinaryHeap, HashMap};
 use std::convert::TryFrom;
 
-static RE: Lazy<Regex> =
-    lazy_regex!(r"^(?<name_encrypted>[a-z-]+)-(?<sector_id>\d+)\[(?<checksum>[a-z]+)\]$");
-
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct RoomCode<'a> {
     pub name_encrypted: &'a str,
@@ -62,6 +59,9 @@ impl<'a> TryFrom<&'a str> for RoomCode<'a> {
     type Error = anyhow::Error;
 
     fn try_from(s: &'a str) -> anyhow::Result<Self> {
+        static RE: Lazy<Regex> =
+            lazy_regex!(r"^(?<name_encrypted>[a-z-]+)-(?<sector_id>\d+)\[(?<checksum>[a-z]+)\]$");
+
         let captures = RE
             .captures(s)
             .with_context(|| format!("expected input to match: {:?}", RE.as_str()))?;
