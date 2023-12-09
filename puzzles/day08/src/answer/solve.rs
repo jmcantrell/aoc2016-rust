@@ -29,11 +29,13 @@ mod tests {
 
     use crate::answer::parse;
 
+    use super::*;
+
     const INPUT: Input = include_str!("../../input-test.txt");
 
     #[test]
-    fn solve() -> anyhow::Result<()> {
-        assert_eq!(super::solve(&parse(INPUT)?)?, 6);
+    fn test_solve() -> anyhow::Result<()> {
+        assert_eq!(solve(&parse(INPUT)?)?, 6);
         Ok(())
     }
 }

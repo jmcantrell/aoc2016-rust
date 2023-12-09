@@ -41,11 +41,13 @@ pub fn solve2(grid: &Parsed2) -> anyhow::Result<Solution2> {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
-    fn is_triangle_possible() {
+    fn test_is_triangle_possible() {
         macro_rules! assert_impossible {
             ($sides:expr) => {
-                assert!(!super::is_triangle_possible(&$sides));
+                assert!(!is_triangle_possible(&$sides));
             };
         }
 

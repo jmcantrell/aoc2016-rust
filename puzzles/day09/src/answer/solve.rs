@@ -16,11 +16,13 @@ pub fn solve2(parsed: Input) -> anyhow::Result<Solution2> {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
-    fn solve1() {
+    fn test_solve1() {
         macro_rules! test {
             ($input:expr => $expected:expr) => {
-                assert_eq!(super::solve1($input).unwrap(), $expected);
+                assert_eq!(solve1($input).unwrap(), $expected);
             };
         }
 
@@ -33,10 +35,10 @@ mod tests {
     }
 
     #[test]
-    fn solve2() {
+    fn test_solve2() {
         macro_rules! test {
             ($input:expr => $expected:expr) => {
-                assert_eq!(super::solve2($input).unwrap(), $expected);
+                assert_eq!(solve2($input).unwrap(), $expected);
             };
         }
 

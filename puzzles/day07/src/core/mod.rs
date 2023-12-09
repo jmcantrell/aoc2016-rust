@@ -106,21 +106,19 @@ impl TryFrom<&str> for Address {
 
 #[cfg(test)]
 mod tests {
-    fn parse(s: &str) -> super::Address {
-        super::Address::try_from(s).unwrap()
-    }
+    use super::*;
 
     #[test]
-    fn supports_tls() {
+    fn test_supports_tls() {
         macro_rules! supported {
             ($input:expr) => {
-                assert!(parse($input).supports_tls());
+                assert!(Address::try_from($input).unwrap().supports_tls());
             };
         }
 
         macro_rules! unsupported {
             ($input:expr) => {
-                assert!(!parse($input).supports_tls());
+                assert!(!Address::try_from($input).unwrap().supports_tls());
             };
         }
 
@@ -131,16 +129,16 @@ mod tests {
     }
 
     #[test]
-    fn supports_ssl() {
+    fn test_supports_ssl() {
         macro_rules! supported {
             ($input:expr) => {
-                assert!(parse($input).supports_ssl());
+                assert!(Address::try_from($input).unwrap().supports_ssl());
             };
         }
 
         macro_rules! unsupported {
             ($input:expr) => {
-                assert!(!parse($input).supports_ssl());
+                assert!(!Address::try_from($input).unwrap().supports_ssl());
             };
         }
 

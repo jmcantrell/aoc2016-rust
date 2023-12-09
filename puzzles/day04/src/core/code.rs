@@ -80,16 +80,18 @@ impl<'a> TryFrom<&'a str> for RoomCode<'a> {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
-    fn is_real() {
+    fn test_is_real() {
         macro_rules! assert_real {
             ($input:expr) => {
-                assert!(super::RoomCode::try_from($input).unwrap().is_real());
+                assert!(RoomCode::try_from($input).unwrap().is_real());
             };
         }
         macro_rules! assert_not_real {
             ($input:expr) => {
-                assert!(!super::RoomCode::try_from($input).unwrap().is_real());
+                assert!(!RoomCode::try_from($input).unwrap().is_real());
             };
         }
 
@@ -101,11 +103,11 @@ mod tests {
     }
 
     #[test]
-    fn decrypt_name() {
+    fn test_decrypt_name() {
         macro_rules! test {
             ($input:expr => $expected:expr) => {
                 assert_eq!(
-                    super::RoomCode::try_from($input).unwrap().decrypt_name(),
+                    RoomCode::try_from($input).unwrap().decrypt_name(),
                     $expected
                 );
             };
